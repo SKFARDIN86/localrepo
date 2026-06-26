@@ -1,2 +1,94 @@
-<p>this is a new repo.</p>
-<p>This is a new feature</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="upload-page">
+        <h1>Upload an Image</h1>
+        <form id="uploadForm" class="upload-form">
+            <label for="imageInput">Choose an image</label>
+            <input id="imageInput" type="file" accept="image/*" />
+            <button type="button" id="uploadButton">Upload Image</button>
+        </form>
+
+        <section class="preview-section">
+            <h2>Preview</h2>
+            <div class="preview-box">
+                <img id="previewImage" alt="Image preview will appear here" />
+                <p id="previewText">No image selected.</p>
+            </div>
+        </section>
+
+        <section class="result-section" hidden id="resultSection">
+            <h2>Upload Result</h2>
+            <p id="resultMessage"></p>
+        </section>
+    </main>
+
+    <script>
+        const imageInput = document.getElementById('imageInput');
+        const previewImage = document.getElementById('previewImage');
+        const previewText = document.getElementById('previewText');
+        const uploadButton = document.getElementById('uploadButton');
+        const resultSection = document.getElementById('resultSection');
+        const resultMessage = document.getElementById('resultMessage');
+
+        imageInput.addEventListener('change', () => {
+            const file = imageInput.files[0];
+            if (!file) {
+                previewImage.src = '';
+                previewText.textContent = 'No image selected.';
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+                previewImage.src = '';
+                previewText.textContent = 'Selected file is not an image.';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                previewImage.src = event.target.result;
+                previewText.textContent = file.name;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        uploadButton.addEventListener('click', async () => {
+            const file = imageInput.files[0];
+            if (!file) {
+                alert('Please choose an image first.');
+                return;
+            }
+
+            // Example upload code: send the file to a server endpoint.
+            // Replace '/upload' with your actual upload URL if you have a backend.
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (!response.ok) {
+                    throw new Error('Upload failed with status ' + response.status);
+                }
+
+                const data = await response.text();
+                resultSection.hidden = false;
+                resultMessage.textContent = 'Image uploaded successfully. Server response: ' + data;
+            } catch (error) {
+                resultSection.hidden = false;
+                resultMessage.textContent = 'Upload failed: ' + error.message;
+            }
+        });
+    </script>
+</body>
+</html>

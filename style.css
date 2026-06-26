@@ -1,3 +1,82 @@
-p {
-    color: red;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f6fb;
+    color: #222;
+}
+
+.upload-page {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+}
+
+.upload-form {
+    display: grid;
+    gap: 1rem;
+}
+
+.upload-form label {
+    font-weight: 600;
+}
+
+.upload-form input[type="file"] {
+    padding: 0.5rem;
+}
+
+.upload-form button {
+    width: fit-content;
+    padding: 0.75rem 1.25rem;
+    background: #3b82f6;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.upload-form button:hover {
+    background: #2563eb;
+}
+
+.preview-section,
+.result-section {
+    margin-top: 1.5rem;
+}
+
+.preview-box {
+    display: grid;
+    gap: 1rem;
+    align-items: center;
+    justify-items: center;
+    padding: 1rem;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    background: #f8fafc;
+}
+
+.preview-box img {
+    max-width: 100%;
+    max-height: 320px;
+    border-radius: 12px;
+    display: block;
+}
+
+.preview-box p {
+    margin: 0;
+    color: #475569;
+}
+
+.result-section {
+    padding: 1rem;
+    border-radius: 12px;
+    background: #e2e8f0;
+}
+
+.result-section p {
+    margin: 0;
 }
